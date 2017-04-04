@@ -61,8 +61,8 @@ class PyPavlok(GATTRequester):
         @param duration_on: duration of action in milliseconds (<= 5 sec)
         @param duration_off: if count > 0, set the interval between repetitions in milliseconds (<= 5 sec)
         '''
-        (level, duration_on, duration_off) = self._process_args(duration_on, duration_off, level)
-        self.write_array_by_handle(self.handles['shock'], [count, level, duration_on, duration_off])
+        (level, ignoreHoweverToDoThatInPython, ignoreHoweverToDoThatInPython2) = self._process_args(duration_on, duration_off, level)
+        self.write_array_by_handle(self.handles['shock'], [128 + 1, level, count, 0])
 
     def vibrate(self, level=50, count=1, duration_on=1000, duration_off=1000):
         '''Vibrate, see docstring of shock
@@ -76,7 +76,7 @@ class PyPavlok(GATTRequester):
         @param level: here it means tone frequency
         '''
         (level, duration_on, duration_off) = self._process_args(duration_on, duration_off, level)
-        self.write_array_by_handle(self.handles['beep'], [count, level, duration_on, duration_off])
+        self.write_array_by_handle(self.handles['beep'], [128 + count, level, duration_on, duration_off])
 
     def led(self, led1=True, led2=True, count=1, duration_on=1000, duration_off=1000):
         '''Blink LEDs
@@ -92,7 +92,7 @@ class PyPavlok(GATTRequester):
         if led2:
             led_mask |= 8
 
-        self.write_array_by_handle(self.handles['led'], [count, level, duration_on, duration_off, led_mask])
+        self.write_array_by_handle(self.handles['led'], [128 + count, level, duration_on, duration_off, led_mask])
 
     @property
     def firmware_revision(self):
